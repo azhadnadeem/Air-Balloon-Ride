@@ -52,20 +52,17 @@ function draw() {
   }
 
   
- // fill(0);
- // stroke("white");
-  //textSize(25);
- // text("**Use arrow keys to move Hot Air Balloon!",40,40);
+  fill(0);
+  stroke("white");
+  textSize(25);
+ text("**Use arrow keys to move Hot Air Balloon!",40,40);
   drawSprites();
 }
 
-//function changePosition(x,y){
-  //balloon.x = balloon.x + x;
-  //balloon.y = balloon.y + y;
-//}
+
 
 function writePosition(x,y){
-  Database.ref('balloon/position').set({'x':Position.x+x,'y':position.y+y})
+  Database.ref('balloon/position').set({'x':position.x+x,'y':position.y+y})
 }
 function readposition(data){
   position=data.val()
