@@ -17,7 +17,8 @@ function setup() {
   createCanvas(1500,700);
   Database=firebase.database();
   console.log(Database)
-  Database.ref('balloon/position').on("value",readposition,showerror)
+  var balloonPosition= Database.ref('balloon/position');
+  balloonPosition.on("value",readposition,showerror);
 
   balloon=createSprite(250,450,150,150);
   balloon.addAnimation("hotAirBalloon",balloonImage1);
@@ -41,14 +42,16 @@ function draw() {
     writePosition(1,0);
   }
   else if(keyDown(UP_ARROW)){
+    writePosition(0,-1);
     balloon.addAnimation("hotAirBalloon",balloonImage2);
     //write code to move air balloon in up direction
-    writePosition(0,-1);
+   balloon.scale=balloon.scale-0.001
   }
   else if(keyDown(DOWN_ARROW)){
+    writePosition(0,+1);
     balloon.addAnimation("hotAirBalloon",balloonImage2);
     //write code to move air balloon in down direction
-    writePosition(0,+1);
+    balloon.scale=balloon.scale+0.001
   }
 
   
@@ -59,15 +62,13 @@ function draw() {
   drawSprites();
 }
 
-
-
 function writePosition(x,y){
   Database.ref('balloon/position').set({'x':position.x+x,'y':position.y+y})
 }
 function readposition(data){
   position=data.val()
-  balloon.x=position.x
-  balloon.y=position.y
+  balloon.x=position.x;
+  balloon.y=position.y;
 }
 function showerror(){
   console.log("error in conecting Database")
